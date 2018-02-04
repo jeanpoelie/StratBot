@@ -157,29 +157,110 @@ namespace R6DB_Bot.Modules
         [Summary("Get Default Region Casual Statistics")]
         public async Task GetCasual([Remainder]string text)
         {
-            var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
-            if(model?.guessed != null && model.guessed.IsGuessed)
+            try
             {
-                await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
+                var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
+                if (model?.guessed != null && model.guessed.IsGuessed)
+                {
+                    await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
+                }
+
+                var regionInfo = new RegionInfoModel();
+                switch (regionEnum)
+                {
+                    case RegionEnum.EMEA:
+                        regionInfo.SetEURegionInfo(model);
+                        break;
+                    case RegionEnum.APAC:
+                        regionInfo.SetASIARegionInfo(model);
+                        break;
+                    case RegionEnum.NCSA:
+                        regionInfo.SetNARegionInfo(model);
+                        break;
+                }
+                await SendCasualInformationMessage(model, regionInfo);
+
+
+            }
+            catch (Exception ex)
+            {
+
+                if (ex.Message.Contains("Failed to fetch") || ex.Message.Contains("BadGateway"))
+                {
+                    await ReplyAsync($"R6DB is down, we will be back shortly, if this takes more than 24 hours send a message to Dakpan#6955");
+                    return;
+                }
+
+                await ReplyAsync($"Something went wrong, I send a message to the developers they will look into it, please try again later!");
+
+
+                var builder = new EmbedBuilder();
+                builder.AddField("Message", text);
+
+
+                //Exception Message splitting
+                var exceptionMessage = ex.Message;
+                var exceptionMessageLength = exceptionMessage.Length;
+                var nr_of_exceptionMessages = (exceptionMessage.Length / 1000) + 1;
+
+                if (nr_of_exceptionMessages == 1)
+                {
+                    builder.AddField("Exception Message", exceptionMessage);
+                }
+                else
+                {
+                    for (var i = 0; i < nr_of_exceptionMessages; i++)
+                    {
+                        builder.AddField("Exception Message Nr " + (i + 1), exceptionMessage.Substring(0, 1000));
+                    }
+                }
+
+
+                //Stacktrace splitting
+                var stackTrace = ex.StackTrace;
+                var stackTraceLength = stackTrace.Length;
+                var nr_of_stacktraces = (stackTrace.Length / 1000) + 1;
+
+                if (nr_of_stacktraces == 1)
+                {
+                    builder.AddField("Exception Stacktrace", stackTrace);
+                }
+                else
+                {
+                    for (var i = 0; i < nr_of_stacktraces; i++)
+                    {
+                        builder.AddField("Exception Stacktrace Nr " + (i + 1), stackTrace.Substring(0, 1000));
+                    }
+                }
+
+
+                builder.Author = new EmbedAuthorBuilder
+                {
+                    IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
+                    Name = "Error Caught",
+                    //Url = "http://r6db.com/player/" + model.id
+                };
+
+                builder.Footer = new EmbedFooterBuilder
+                {
+                    IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
+                    Text = "Created by Dakpan#6955"
+                };
+
+                //builder.ThumbnailUrl = StringVisualiser.GetRankImage(rankNr);
+                //builder.ImageUrl = "http://r6db.com/player/" + model?.id;
+                builder.Timestamp = DateTime.UtcNow;
+                //builder.Url = "http://r6db.com/player/" + model?.id;
+
+                builder.WithColor(Color.Red);
+
+                var u = Context.Guild.GetUser(132556381046833152);
+                await u.SendMessageAsync(string.Empty, false, builder);
             }
 
-            var regionInfo = new RegionInfo();
-            switch(regionEnum)
-            {
-                case RegionEnum.EMEA:
-                    regionInfo.SetEURegionInfo(model);
-                    break;
-                case RegionEnum.APAC:
-                    regionInfo.SetASIARegionInfo(model);
-                    break;
-                case RegionEnum.NCSA:
-                    regionInfo.SetNARegionInfo(model);
-                    break;
-            }
-            await SendCasualInformationMessage(model, regionInfo);
         }
 
-        private async Task SendCasualInformationMessage(PlayerModel model, RegionInfo regionInfo)
+        private async Task SendCasualInformationMessage(PlayerModel model, RegionInfoModel regionInfo)
         {
             var builder = new EmbedBuilder();
 
@@ -192,27 +273,27 @@ namespace R6DB_Bot.Modules
             {
                 TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.casual?.timePlayed);
 
-                builder.AddInlineField(region + " All Time","**Total Played: ** " + model?.stats?.casual?.played + Environment.NewLine +
-                                                            "**Total W/L (Ratio):** " + model?.stats?.casual?.won + " / " + model?.stats?.casual?.lost + " **(" + GetRatio(model?.stats?.casual?.won, model?.stats?.casual?.lost) + ")**" + Environment.NewLine +
-                                                            "**Total K/D (Ratio):** " + model?.stats?.casual?.kills + " / " + model?.stats?.casual?.deaths + " **(" + GetRatio(model?.stats?.casual?.kills, model?.stats?.casual?.deaths) + ")**");
+                builder.AddInlineField(region + " All Time","**Total Matches Played: ** " + model?.stats?.casual?.played + Environment.NewLine +
+                                                            "**Total W/L (Ratio):** " + model?.stats?.casual?.won + " / " + model?.stats?.casual?.lost + " **(" + StringVisualiser.GetRatio(model?.stats?.casual?.won, model?.stats?.casual?.lost) + ")**" + Environment.NewLine +
+                                                            "**Total K/D (Ratio):** " + model?.stats?.casual?.kills + " / " + model?.stats?.casual?.deaths + " **(" + StringVisualiser.GetRatio(model?.stats?.casual?.kills, model?.stats?.casual?.deaths) + ")**");
             }
 
             if (model?.lastPlayed != null)
             {
                 TimeSpan casualSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.casual);
                     
-                builder.AddInlineField("**Play Time**", ToReadableString(casualSeconds));
-                builder.AddInlineField("**Last Played**", model?.lastPlayed.last_played?.ToString("dd MMMM yyyy hh:mm:ss"));
+                builder.AddInlineField("**Play Time**", StringVisualiser.ToReadablePlaytime(casualSeconds));
+                builder.AddInlineField("**Last Played**", model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss"));
             }
 
             builder.ImageUrl = "https://ubistatic-a.akamaihd.net/0058/prod/assets/images/season5-casual20.f31680a7.svg";
-            builder.Description = region + " Casual information on " + platform + " for **" + model.name + "**";
+            builder.Description = region + " Casual information on " + platform + " for **" + model?.name + "**";
 
             builder.Author = new EmbedAuthorBuilder
             {
                 IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
                 Name = platform + " " + region + " Casual Information",
-                Url = "http://r6db.com/player/" + model.id
+                Url = "http://r6db.com/player/" + model?.id
             };
 
             builder.Footer = new EmbedFooterBuilder
@@ -221,38 +302,13 @@ namespace R6DB_Bot.Modules
                 Text = "Created by Dakpan#6955"
             };
 
-            builder.ThumbnailUrl = "https://cdn.thingiverse.com/renders/7b/83/18/94/0c/f3106dba9117e872f7f57f851a95bba5_preview_card.jpg";
+            builder.ThumbnailUrl = "https://uplay-avatars.s3.amazonaws.com/" + model?.id + "/default_146_146.png";
             builder.Timestamp = DateTime.UtcNow;
-            builder.Url = "http://r6db.com/player/" + model.id;
+            builder.Url = "http://r6db.com/player/" + model?.id;
 
             builder.WithColor(Color.Orange);
 
             await ReplyAsync(string.Empty, false, builder);
-        }
-
-        private string ToReadableString(TimeSpan span)
-        {
-            string formatted = string.Format("{0}{1}{2}{3}",
-                span.Duration().Days > 0 ? string.Format("{0:0} day{1} ", span.Days, span.Days == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Hours > 0 ? string.Format("{0:0} hour{1} " + Environment.NewLine, span.Hours, span.Hours == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Minutes > 0 ? string.Format("{0:0} minute{1} ", span.Minutes, span.Minutes == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Seconds > 0 ? string.Format("{0:0} second{1} ", span.Seconds, span.Seconds == 1 ? String.Empty : "s") : string.Empty);
-            
-            if (string.IsNullOrEmpty(formatted))
-            {
-                formatted = "0 seconds";
-            }
-
-            return formatted;
-        }
-
-        private string GetRatio(int? min, int? max)
-        {
-            if(min == 0  || min == null || max == 0 || max == null)
-            {
-                return "0";
-            }
-            return ((decimal)min / (decimal)max).ToString("N2");
         }
     }
 }

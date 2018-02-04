@@ -14,8 +14,8 @@ using R6DB_Bot.Services;
 
 namespace R6DB_Bot.Modules
 {
-    [Name("Ranked Information")]
-    public class RankedModule : ModuleBase<SocketCommandContext>
+    [Name("Game Mode Information")]
+    public class GameModeModule : ModuleBase<SocketCommandContext>
     {
         public string baseUrl = "";
         public string xAppId = "";
@@ -27,7 +27,7 @@ namespace R6DB_Bot.Modules
         private RegionEnum regionEnum;
         private PlatformEnum platformEnum;
 
-        public RankedModule(CommandService service, IConfigurationRoot config)
+        public GameModeModule(CommandService service, IConfigurationRoot config)
         {
             _service = service;
             _config = config;
@@ -39,130 +39,130 @@ namespace R6DB_Bot.Modules
             platformEnum = PlatformEnum.PC;
         }
 
-        [Command("ranked eu"), Alias("rank eu", "r eu"), Name("Rank Europe")]
+        [Command("gamemode eu"), Alias("gamemode eu", "r eu"), Name("Game Mode Europe")]
         [Priority(1)]
-        [Summary("Get rank statistics")]
-        public async Task GetEURanks([Remainder]string text)
+        [Summary("Get game mode statistics")]
+        public async Task GetEUGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.EMEA;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked eu pc"), Alias("rank eu pc", "r eu pc"), Name("Rank PC Europe")]
+        [Command("gamemode eu pc"), Alias("gamemode eu pc", "r eu pc"), Name("Game Mode PC Europe")]
         [Priority(2)]
-        [Summary("Get EU PC rank statistics")]
-        public async Task GetEUPCRanks([Remainder]string text)
+        [Summary("Get EU PC game mode statistics")]
+        public async Task GetEUPCGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.EMEA;
             platformEnum = PlatformEnum.PC;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked eu xbox"), Alias("rank eu xbox", "r eu xbox"), Name("Rank XBOX Europe")]
+        [Command("gamemode eu xbox"), Alias("gamemode eu xbox", "r eu xbox"), Name("Game Mode XBOX Europe")]
         [Priority(2)]
-        [Summary("Get EU XBOX rank statistics")]
-        public async Task GetEUXBOXRanks([Remainder]string text)
+        [Summary("Get EU XBOX game mode statistics")]
+        public async Task GetEUXBOXGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.EMEA;
             platformEnum = PlatformEnum.XBOX;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked eu ps4"), Alias("rank eu ps4", "r eu ps4"), Name("Rank PS4 Europe")]
+        [Command("gamemode eu ps4"), Alias("gamemode eu ps4", "r eu ps4"), Name("Game Mode PS4 Europe")]
         [Priority(2)]
-        [Summary("Get EU PS4 rank statistics")]
-        public async Task GetEUPS4Ranks([Remainder]string text)
+        [Summary("Get EU PS4 game mode statistics")]
+        public async Task GetEUPS4GameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.EMEA;
             platformEnum = PlatformEnum.PS4;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked na"), Alias("rank na", "r na"), Name("Rank America")]
+        [Command("gamemode na"), Alias("gamemode na", "r na"), Name("Game Mode America")]
         [Priority(1)]
-        [Summary("Get NA rank statistics")]
-        public async Task GetNARanks([Remainder]string text)
+        [Summary("Get NA game mode statistics")]
+        public async Task GetNAGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.NCSA;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked na pc"), Alias("rank na pc", "r na pc"), Name("Rank PC America")]
+        [Command("gamemode na pc"), Alias("gamemode na pc", "r na pc"), Name("Game Mode PC America")]
         [Priority(2)]
-        [Summary("Get NA PC rank statistics")]
-        public async Task GetNAPCRanks([Remainder]string text)
+        [Summary("Get NA PC game mode statistics")]
+        public async Task GetNAPCGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.NCSA;
             platformEnum = PlatformEnum.PC;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked na xbox"), Alias("rank na xbox", "r na xbox"), Name("Rank XBOX America")]
+        [Command("gamemode na xbox"), Alias("gamemode na xbox", "r na xbox"), Name("Game Mode XBOX America")]
         [Priority(2)]
-        [Summary("Get NA XBOX rank statistics")]
-        public async Task GetNAXBOXRanks([Remainder]string text)
+        [Summary("Get NA XBOX game mode statistics")]
+        public async Task GetNAXBOXGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.NCSA;
             platformEnum = PlatformEnum.XBOX;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked na ps4"), Alias("rank na ps4", "r na ps4"), Name("Rank PS4 America")]
+        [Command("gamemode na ps4"), Alias("gamemode na ps4", "r na ps4"), Name("Game Mode PS4 America")]
         [Priority(2)]
-        [Summary("Get NA PS4 rank statistics")]
-        public async Task GetNAPS4Ranks([Remainder]string text)
+        [Summary("Get NA PS4 game mode statistics")]
+        public async Task GetNAPS4GameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.NCSA;
             platformEnum = PlatformEnum.PS4;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked asia"), Alias("rank asia", "r asia"), Name("Rank asia")]
+        [Command("gamemode asia"), Alias("gamemode asia", "r asia"), Name("Game Mode asia")]
         [Priority(1)]
-        [Summary("Get ASIA rank statistics")]
-        public async Task GetASIARanks([Remainder]string text)
+        [Summary("Get ASIA game mode statistics")]
+        public async Task GetASIAGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.APAC;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked asia pc"), Alias("rank asia pc", "r asia pc"), Name("Rank PC ASIA")]
+        [Command("gamemode asia pc"), Alias("gamemode asia pc", "r asia pc"), Name("Game Mode PC ASIA")]
         [Priority(2)]
-        [Summary("Get ASIA PC rank statistics")]
-        public async Task GetASIAPCRanks([Remainder]string text)
+        [Summary("Get ASIA PC game mode statistics")]
+        public async Task GetASIAPCGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.EMEA;
             platformEnum = PlatformEnum.PC;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked asia xbox"), Alias("rank asia xbox", "r asia xbox"), Name("Rank XBOX ASIA")]
+        [Command("gamemode asia xbox"), Alias("gamemode asia xbox", "r asia xbox"), Name("Game Mode XBOX ASIA")]
         [Priority(2)]
-        [Summary("Get ASIA XBOX rank statistics")]
-        public async Task GetASIAXBOXRanks([Remainder]string text)
+        [Summary("Get ASIA XBOX game mode statistics")]
+        public async Task GetASIAXBOXGameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.EMEA;
             platformEnum = PlatformEnum.XBOX;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked asia ps4"), Alias("rank asia ps4", "r asia ps4"), Name("Rank PS4 ASIA")]
+        [Command("gamemode asia ps4"), Alias("gamemode asia ps4", "r asia ps4"), Name("Game Mode PS4 ASIA")]
         [Priority(2)]
-        [Summary("Get ASIA PS4 rank statistics")]
-        public async Task GetASIAPS4Ranks([Remainder]string text)
+        [Summary("Get ASIA PS4 game mode statistics")]
+        public async Task GetASIAPS4GameModes([Remainder]string text)
         {
             regionEnum = RegionEnum.EMEA;
             platformEnum = PlatformEnum.PS4;
-            await GetRanks(text);
+            await GetGameModes(text);
         }
 
-        [Command("ranked"), Alias("rank", "r"), Name("Rank Default Region")]
+        [Command("gamemode"), Alias("gamemode", "r"), Name("Game Mode Default Region")]
         [Priority(0)]
-        [Summary("Get Default Region Rank Statistics")]
-        public async Task GetRanks([Remainder]string text)
+        [Summary("Get Default Region Game Mode Statistics")]
+        public async Task GetGameModes([Remainder]string text)
         {
             try
-            {
+            { 
                 var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
                 if (model?.guessed != null && model.guessed.IsGuessed)
                 {
@@ -182,12 +182,12 @@ namespace R6DB_Bot.Modules
                         regionInfo.SetNARegionInfo(model);
                         break;
                 }
-                await SendRankedInformationMessage(model, regionInfo);
+                await SendGameModeInformationMessage(model, regionInfo);
             }
             catch (Exception ex)
             {
 
-                if(ex.Message.Contains("Failed to fetch") || ex.Message.Contains("BadGateway"))
+                if (ex.Message.Contains("Failed to fetch") || ex.Message.Contains("BadGateway"))
                 {
                     await ReplyAsync($"R6DB is down, we will be back shortly, if this takes more than 24 hours send a message to Dakpan#6955");
                     return;
@@ -216,7 +216,7 @@ namespace R6DB_Bot.Modules
                         builder.AddField("Exception Message Nr " + (i + 1), exceptionMessage.Substring(0, 1000));
                     }
                 }
-                
+
 
                 //Stacktrace splitting
                 var stackTrace = ex.StackTrace;
@@ -261,54 +261,51 @@ namespace R6DB_Bot.Modules
             }
         }
 
-        private async Task SendRankedInformationMessage(PlayerModel model, RegionInfoModel regionInfo)
+        private async Task SendGameModeInformationMessage(PlayerModel model, RegionInfoModel regionInfo)
         {
-            var rankNr = 0;
             var builder = new EmbedBuilder();
 
             var region = regionEnum.GetAttribute<RegionInformation>().Description;            
             var platform = platformEnum.GetAttribute<PlatformInformation>().Description;
-
-            builder.AddField("General Information", "**Level:** " + model?.level);
             
-            if (regionInfo != null)
-            {
-                builder.AddInlineField(region + " Current Season",  "**Rank:** " + StringVisualiser.ToReadableRank(regionInfo.rank) + Environment.NewLine +
-                                                                    "**MMR:** " + regionInfo.mmr.ToString("#.##") + Environment.NewLine +
-                                                                    "**Highest MMR:** " + regionInfo.max_mmr.ToString("#.##") + Environment.NewLine +
-                                                                    "**Next Rank:** " + StringVisualiser.CeilingRankMMR(regionInfo.rank) + Environment.NewLine +
-                                                                    "**W/L/A:** " + regionInfo.wins + "/" + regionInfo.losses + "/" + regionInfo.abandons + Environment.NewLine +
-                                                                    "**W/L Ratio:** **" + StringVisualiser.GetRatio(regionInfo.wins, regionInfo.losses) + "**");
 
-                if (rankNr < regionInfo.rank)
+            if (model?.stats != null)
+            {
+                if(model?.stats?.bomb != null)
                 {
-                    rankNr = regionInfo.rank;
+                    builder.AddField("**Bomb**",  $"**Win:** {model?.stats?.bomb?.won}" + Environment.NewLine +
+                                                  $"**Lost:** {model?.stats?.bomb?.lost}" + Environment.NewLine +
+                                                  $"**Played:** {model?.stats?.bomb?.played}" + Environment.NewLine +
+                                                  $"**Ratio:** {StringVisualiser.GetRatio(model?.stats?.bomb?.won, model?.stats?.bomb?.lost)}" + Environment.NewLine +
+                                                  $"**Best Score:** {model?.stats?.bomb?.bestScore}" + Environment.NewLine);
+                }
+
+                if (model?.stats?.secure != null)
+                {
+                    builder.AddField("**Secure**",  $"**Win:** {model?.stats?.secure?.won}" + Environment.NewLine +
+                                                    $"**Lost:** {model?.stats?.secure?.lost}" + Environment.NewLine +
+                                                    $"**Played:** {model?.stats?.secure?.played}" + Environment.NewLine +
+                                                    $"**Ratio:** {StringVisualiser.GetRatio(model?.stats?.secure?.won, model?.stats?.secure?.lost)}" + Environment.NewLine +
+                                                    $"**Best Score:** {model?.stats?.secure?.bestScore}" + Environment.NewLine);
+                }
+
+                if (model?.stats?.hostage != null)
+                {
+                    builder.AddField("**Hostage**",     $"**Win:** {model?.stats?.hostage?.won}" + Environment.NewLine +
+                                                        $"**Lost:** {model?.stats?.hostage?.lost}" + Environment.NewLine +
+                                                        $"**Played:** {model?.stats?.hostage?.played}" + Environment.NewLine +
+                                                        $"**Ratio:** {StringVisualiser.GetRatio(model?.stats?.hostage?.won, model?.stats?.hostage?.lost)}" + Environment.NewLine +
+                                                        $"**Best Score:** {model?.stats?.hostage?.bestScore}" + Environment.NewLine);
                 }
             }
-
-            if(model?.stats?.ranked != null)
-            {
-                TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.ranked?.timePlayed);
-
-                builder.AddInlineField(region + " All Time","**Total Matches Played: ** " + model?.stats?.ranked?.played + Environment.NewLine +
-                                                            "**Total W/L (Ratio):** " + model?.stats?.ranked?.won + " / " + model?.stats?.ranked?.lost + " **(" + StringVisualiser.GetRatio(model?.stats?.ranked?.won, model?.stats?.ranked?.lost) + ")**" + Environment.NewLine +
-                                                            "**Total K/D (Ratio):** " + model?.stats?.ranked?.kills + " / " + model?.stats?.ranked?.deaths + " **(" + StringVisualiser.GetRatio(model?.stats?.ranked?.kills, model?.stats?.ranked?.deaths) + ")**");
-            }
-
-            if (model?.lastPlayed != null)
-            {
-                TimeSpan rankSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.ranked);
-                    
-                builder.AddInlineField("**Play Time**", StringVisualiser.ToReadablePlaytime(rankSeconds));
-                builder.AddInlineField("**Last Played**", model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss") ?? "Too long ago");
-            }
-
+            
+            builder.Description = region + " Game Mode information on " + platform + " for **" + model?.name + "**";
 
             builder.Author = new EmbedAuthorBuilder
             {
                 IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
-                Name = platform + " " + region + " Ranked Information",
-                Url = "http://r6db.com/player/" + model.id
+                Name = platform + " " + region + " Game Mode Information",
+                Url = "http://r6db.com/player/" + model?.id
             };
 
             builder.Footer = new EmbedFooterBuilder
@@ -317,9 +314,7 @@ namespace R6DB_Bot.Modules
                 Text = "Created by Dakpan#6955"
             };
 
-            builder.ThumbnailUrl = StringVisualiser.GetRankImage(rankNr);
-            builder.ImageUrl = "http://r6db.com/player/" + model?.id;
-            builder.Description = region + " Ranked information on " + platform + " for **" + model?.name + "**";
+            builder.ThumbnailUrl = "https://uplay-avatars.s3.amazonaws.com/" + model?.id + "/default_146_146.png";
             builder.Timestamp = DateTime.UtcNow;
             builder.Url = "http://r6db.com/player/" + model?.id;
 

@@ -55,10 +55,15 @@ namespace R6DB_Bot
             _discordClient = provider.GetService<DiscordSocketClient>();
             _discordClient.MessageReceived += OnMessageReceivedAsync;
             await _discordClient.SetGameAsync("use r6db help for info.");
-            await _discordClient.SetStatusAsync(UserStatus.AFK);
+            await _discordClient.SetStatusAsync(UserStatus.Online);
             //_discordClient.JoinedGuild += _client_JoinedGuild;
 
             await Task.Delay(-1);     // Prevent the application from closing
+        }
+
+        public int CountGuilds()
+        {
+            return _discordClient.Guilds.Count;
         }
 
         public async Task OnMessageReceivedAsync(SocketMessage parameterMessage)
@@ -73,23 +78,6 @@ namespace R6DB_Bot
             if (!(message.HasMentionPrefix(_discordClient.CurrentUser, ref argPos) ||
                   message.HasStringPrefix(Prefix, ref argPos))) return;
             
-        }
-
-        private static async Task _client_JoinedGuild(SocketGuild guild)
-        {
-            var embed = new EmbedBuilder();
-            embed.AddField("R6DB Bot ",
-                $"Beep boop, R6DB Bot here! Type `{Prefix}help` to see a list of my commands.");
-            embed.WithColor(Color.Blue);
-            embed.AddField("Developed By Dakpan", "Support Server: https://discord.gg/UeBwppF");
-            try
-            {
-                await guild.DefaultChannel.SendMessageAsync("", false, embed.Build());
-            }
-            catch
-            {
-                //
-            }
         }
     }
 }
