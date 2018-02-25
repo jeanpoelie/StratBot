@@ -457,8 +457,7 @@ namespace StratBot.Modules
                 builder.Author = new EmbedAuthorBuilder
                 {
                     IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
-                    Name = "Error Caught",
-                    //Url = "http://r6db.com/player/" + model.id
+                    Name = "Error Caught"
                 };
 
                 builder.Footer = new EmbedFooterBuilder
@@ -466,11 +465,8 @@ namespace StratBot.Modules
                     IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
                     Text = "Created by Dakpan#6955"
                 };
-
-                //builder.ThumbnailUrl = StringVisualiser.GetRankImage(rankNr);
-                //builder.ImageUrl = "http://r6db.com/player/" + model?.id;
+                
                 builder.Timestamp = DateTime.UtcNow;
-                //builder.Url = "http://r6db.com/player/" + model?.id;
 
                 builder.WithColor(Color.Red);
 
@@ -491,8 +487,7 @@ namespace StratBot.Modules
                 Author = new EmbedAuthorBuilder()
                 {
                     IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
-                    Name = "Random Operator",
-                    Url = "http://r6db.com/player/"
+                    Name = "Random Operator"
                 },
 
                 // Integer color for our Embed. We'll use a nice dark red color here.

@@ -33,10 +33,10 @@ namespace StratBot.Modules
             builder.AddField("Legend", "`[]` = optional " + Environment.NewLine + "`()` = required");
 
             builder.AddInlineField("Strat Commands",    $"`{Prefix}operator (side) [number of ops]`" + Environment.NewLine +
-                                                       $"`{Prefix}strat [side] [difficulty] [platform] [gamemode] (game name)`");
+                                                       $"`{Prefix}strat [side] [difficulty] [gamemode] (game name)`");
 
             builder.AddInlineField("Example", $"{Prefix}operator attack 5" + Environment.NewLine +
-                                              $"{Prefix}strat attack easy keyboardandmouse bomb siege");
+                                              $"{Prefix}strat attack easy bomb siege");
 
 
             builder.AddField("Bot Commands",   $"`{Prefix}invite`" + Environment.NewLine +
@@ -135,14 +135,14 @@ namespace StratBot.Modules
         [Summary("How to contribute to the project")]
         public async Task ContributeAsync()
         {
-            await ReplyAsync($"You can contribute to the project by helping me develop or give me feedback: https://github.com/jeanpoelie/R6DB-Discord-Bot/tree/development");
+            await ReplyAsync($"You can contribute to the project by helping me develop or give me feedback: https://github.com/jeanpoelie/StratBot/tree/development");
         }
 
         [Command("todo"), Name("todo")]
         [Summary("You can find the todo list here!")]
         public async Task TODOAsync()
         {
-            await ReplyAsync($"You can see the stuff I still want to do & bug fixes here: https://github.com/jeanpoelie/R6DB-Discord-Bot/projects/1");
+            await ReplyAsync($"You can see the stuff I still want to do & bug fixes here: https://github.com/jeanpoelie/StratBot/projects/1");
         }
 
         [Command("guild"), Alias("g"), Name("guild")]
