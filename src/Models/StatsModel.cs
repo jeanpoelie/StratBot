@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Stratbot.Models;
 
-namespace R6DB_Bot.Models
+namespace StratBot.Models
 {
     public class StatsModel
     {

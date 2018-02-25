@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace R6DB_Bot.Modules
+namespace StratBot.Modules
 {
     [Name("Help")]
     public class HelpModule : ModuleBase<SocketCommandContext>
@@ -32,23 +32,11 @@ namespace R6DB_Bot.Modules
 
             builder.AddField("Legend", "`[]` = optional " + Environment.NewLine + "`()` = required");
 
-            builder.AddInlineField("R6DB Commands",    $"`{Prefix}casual [region] [platform] (player name)`" + Environment.NewLine +
-                                                       $"`{Prefix}profile [region] [platform] (player name)`" + Environment.NewLine +
-                                                       $"`{Prefix}operator [region] [platform] (operator name) (player name)`" + Environment.NewLine +
-                                                       $"`{Prefix}gamemode [region] [platform] (gamemode) (player name)`" + Environment.NewLine +
-                                                       Environment.NewLine +
-                                                       $"*Make sure that the following commands are in a spam channel, because they will spam your channel :)*" + Environment.NewLine +
-                                                       $"`{Prefix}esl match (ESL MATCH URL)` **beta**" + Environment.NewLine +
-                                                       $"`{Prefix}esl team (ESL TEAM URL)` **beta**" + Environment.NewLine +
-                                                       $"`{Prefix}esl player (ESL PLAYER URL)` **beta**");
+            builder.AddInlineField("Strat Commands",    $"`{Prefix}operator (side) [number of ops]`" + Environment.NewLine +
+                                                       $"`{Prefix}strat [side] [difficulty] [platform] [gamemode] (game name)`");
 
-            builder.AddInlineField("Example", $"{Prefix}casual eu pc dakpan" + Environment.NewLine +
-                                              $"{Prefix}profile eu pc dakpan" + Environment.NewLine +
-                                              $"{Prefix}operator eu pc fuze dakpan" + Environment.NewLine +
-                                              $"{Prefix}gamemode eu pc hostage dakpan" + Environment.NewLine +
-                                              $"{Prefix}esl match https://play.eslgaming.com/rainbowsix/europe-pc/r6siege/major/go4r6-europe/cup-81/match/35281332/" + Environment.NewLine +
-                                              $"{Prefix}esl team https://play.eslgaming.com/team/11450266/" + Environment.NewLine +
-                                              $"{Prefix}esl player https://play.eslgaming.com/player/9798223/");
+            builder.AddInlineField("Example", $"{Prefix}operator attack 5" + Environment.NewLine +
+                                              $"{Prefix}strat attack easy keyboardandmouse bomb siege");
 
 
             builder.AddField("Bot Commands",   $"`{Prefix}invite`" + Environment.NewLine +

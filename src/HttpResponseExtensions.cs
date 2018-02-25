@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http;
 
-namespace R6DB_Bot
+namespace StratBot
 {
     public static class HttpResponseExtensions
     {

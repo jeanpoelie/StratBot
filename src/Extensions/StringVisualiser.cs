@@ -1,9 +1,9 @@
-﻿using R6DB_Bot.Enums;
+﻿using StratBot.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace R6DB_Bot.Extensions
+namespace StratBot.Extensions
 {
     public static class StringVisualiser
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace R6DB_Bot.Models
+namespace StratBot.Models
 {
     public class SecureModel
     {

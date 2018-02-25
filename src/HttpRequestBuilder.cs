@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Linq;
 
-namespace R6DB_Bot
+namespace StratBot
 {
     public class HttpRequestBuilder
     {

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
-namespace R6DB_Bot.Extensions
+namespace StratBot.Extensions
 {
     public static class Extensions
     {

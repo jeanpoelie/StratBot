@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace R6DB_Bot.Services
+namespace StratBot.Services
 {
     public class LoggingService 
     {

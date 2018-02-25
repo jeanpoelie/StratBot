@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace R6DB_Bot.Models
+namespace StratBot.Models
 {
     public class ESLTeamModel
     {
