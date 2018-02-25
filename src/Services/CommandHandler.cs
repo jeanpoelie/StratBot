@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using System;
 
-namespace R6DB_Bot
+namespace StratBot
 {
     public class CommandHandler
     {

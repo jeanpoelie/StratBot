@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Text;
 
-namespace R6DB_Bot
+namespace StratBot
 {
     public class JsonContent : StringContent
     {

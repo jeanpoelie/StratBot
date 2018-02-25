@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace R6DB_Bot.Services
+namespace StratBot.Services
 {
     public class StartupService
     {

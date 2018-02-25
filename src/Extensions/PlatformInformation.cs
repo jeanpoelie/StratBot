@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace R6DB_Bot.Extensions
+namespace StratBot.Extensions
 {
     [AttributeUsage(AttributeTargets.All)]
     public class PlatformInformation : DescriptionAttribute

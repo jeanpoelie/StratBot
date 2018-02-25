@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace R6DB_Bot
+namespace StratBot
 {
     public static class HttpRequestFactory
     {

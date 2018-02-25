@@ -3,11 +3,11 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using R6DB_Bot.Services;
+using StratBot.Services;
 using System;
 using System.Threading.Tasks;
 
-namespace R6DB_Bot
+namespace StratBot
 {
     public class Program
     {
@@ -54,7 +54,7 @@ namespace R6DB_Bot
 
             _discordClient = provider.GetService<DiscordSocketClient>();
             _discordClient.MessageReceived += OnMessageReceivedAsync;
-            await _discordClient.SetGameAsync("use r6db help for info.");
+            await _discordClient.SetGameAsync($"use {Prefix}help for info.");
             await _discordClient.SetStatusAsync(UserStatus.Online);
             //_discordClient.JoinedGuild += _client_JoinedGuild;
 

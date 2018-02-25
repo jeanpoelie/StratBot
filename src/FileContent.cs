@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Net.Http;
 
-namespace R6DB_Bot
+namespace StratBot
 {
     public class FileContent : MultipartFormDataContent
     {
